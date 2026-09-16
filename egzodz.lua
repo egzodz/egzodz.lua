@@ -687,4 +687,12 @@ btn(PV,"🎨 Aplicar Transparência",Color3.fromRGB(120,100,180),function()
 end)
 
 label(PV,"ACESSÓRIOS")
-btn(PV
+btn(PV,"🎩 Remover Acessórios",Color3.fromRGB(120,100,180),function()
+  local c=L.Character
+  if not c then return end
+  for _,v in ipairs(c:GetDescendants())do
+    if v:IsA("Accessory")or v:IsA("Hat")then v:Destroy() end
+  end
+end)
+
+log("=== EGZODZ HUB v1.0 carregado ===")
