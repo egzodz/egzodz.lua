@@ -54,8 +54,15 @@ B.Font=Enum.Font.GothamBlack
 B.BorderSizePixel=0
 B.Draggable=true
 B.Parent=S
-local bc=Instance.new("UICorner")bc.CornerRadius=UDim.new(1,0)bc.Parent=B
-local bg=Instance.new("UIGradient")bg.Color=ColorSequence.new(VERDE,AZUL)bg.Rotation=45 bg.Parent=B
+
+local bc=Instance.new("UICorner")
+bc.CornerRadius=UDim.new(1,0)
+bc.Parent=B
+
+local bg=Instance.new("UIGradient")
+bg.Color=ColorSequence.new(VERDE,AZUL)
+bg.Rotation=45
+bg.Parent=B
 
 local M=Instance.new("Frame")
 M.Size=UDim2.new(0,380,0,440)
@@ -65,15 +72,25 @@ M.BorderSizePixel=0
 M.Draggable=true
 M.Visible=false
 M.Parent=S
-local mc=Instance.new("UICorner")mc.CornerRadius=UDim.new(0,12)mc.Parent=M
-local ms=Instance.new("UIStroke")ms.Color=VERDE ms.Thickness=1.5 ms.Parent=M
+
+local mc=Instance.new("UICorner")
+mc.CornerRadius=UDim.new(0,12)
+mc.Parent=M
+
+local ms=Instance.new("UIStroke")
+ms.Color=VERDE
+ms.Thickness=1.5
+ms.Parent=M
 
 local H=Instance.new("Frame")
 H.Size=UDim2.new(1,0,0,40)
 H.BackgroundColor3=Color3.fromRGB(20,28,38)
 H.BorderSizePixel=0
 H.Parent=M
-local hc=Instance.new("UICorner")hc.CornerRadius=UDim.new(0,12)hc.Parent=H
+
+local hc=Instance.new("UICorner")
+hc.CornerRadius=UDim.new(0,12)
+hc.Parent=H
 
 local ti=Instance.new("TextLabel")
 ti.Size=UDim2.new(1,-90,0,20)
@@ -96,9 +113,13 @@ cl.TextSize=14
 cl.Font=Enum.Font.GothamBold
 cl.BorderSizePixel=0
 cl.Parent=H
-local cc=Instance.new("UICorner")cc.CornerRadius=UDim.new(0,7)cc.Parent=cl
+
+local cc=Instance.new("UICorner")
+cc.CornerRadius=UDim.new(0,7)
+cc.Parent=cl
 
 local open=false
+
 local function setP(s)
   open=s
   if s then
@@ -111,11 +132,20 @@ local function setP(s)
     M.Visible=false
   end
 end
-B.MouseButton1Click:Connect(function()setP(not open)end)
-cl.MouseButton1Click:Connect(function()setP(false)end)
+
+B.MouseButton1Click:Connect(function()
+  setP(not open)
+end)
+
+cl.MouseButton1Click:Connect(function()
+  setP(false)
+end)
+
 UIS.InputBegan:Connect(function(i,g)
   if g then return end
-  if i.KeyCode==Enum.KeyCode.RightShift then setP(not open)end
+  if i.KeyCode==Enum.KeyCode.RightShift then
+    setP(not open)
+  end
 end)
 
 local SB=Instance.new("Frame")
@@ -124,12 +154,19 @@ SB.Position=UDim2.new(0,6,0,46)
 SB.BackgroundColor3=Color3.fromRGB(20,28,38)
 SB.BorderSizePixel=0
 SB.Parent=M
-local sbc=Instance.new("UICorner")sbc.CornerRadius=UDim.new(0,8)sbc.Parent=SB
+
+local sbc=Instance.new("UICorner")
+sbc.CornerRadius=UDim.new(0,8)
+sbc.Parent=SB
+
 local sbl=Instance.new("UIListLayout")
 sbl.Padding=UDim.new(0,4)
 sbl.HorizontalAlignment=Enum.HorizontalAlignment.Center
 sbl.Parent=SB
-local sbp=Instance.new("UIPadding")sbp.PaddingTop=UDim.new(0,6)sbp.Parent=SB
+
+local sbp=Instance.new("UIPadding")
+sbp.PaddingTop=UDim.new(0,6)
+sbp.Parent=SB
 
 local CT=Instance.new("Frame")
 CT.Size=UDim2.new(1,-58,1,-50)
@@ -138,6 +175,7 @@ CT.BackgroundTransparency=1
 CT.Parent=M
 
 local pages={}
+
 local function tab(ico)
   local b=Instance.new("TextButton")
   b.Size=UDim2.new(0,34,0,34)
@@ -148,7 +186,9 @@ local function tab(ico)
   b.Font=Enum.Font.GothamBold
   b.BorderSizePixel=0
   b.Parent=SB
-  local c=Instance.new("UICorner")c.CornerRadius=UDim.new(0,8)c.Parent=b
+  local c=Instance.new("UICorner")
+  c.CornerRadius=UDim.new(0,8)
+  c.Parent=b
   local p=Instance.new("ScrollingFrame")
   p.Size=UDim2.new(1,0,1,0)
   p.BackgroundTransparency=1
@@ -158,7 +198,9 @@ local function tab(ico)
   p.AutomaticCanvasSize=Enum.AutomaticSize.Y
   p.Visible=false
   p.Parent=CT
-  local l=Instance.new("UIListLayout")l.Padding=UDim.new(0,5)l.Parent=p
+  local l=Instance.new("UIListLayout")
+  l.Padding=UDim.new(0,5)
+  l.Parent=p
   pages[ico]={b=b,p=p}
   b.MouseButton1Click:Connect(function()
     for _,v in pairs(pages)do
@@ -175,7 +217,10 @@ local PG=tab("P")
 local PM=tab("M")
 local PA=tab("A")
 local PE=tab("V")
-task.defer(function()pages["P"].b:Fire("MouseButton1Click")end)
+
+task.defer(function()
+  pages["P"].b:Fire("MouseButton1Click")
+end)
 
 local function btn(par,txt,col,fn)
   local b=Instance.new("TextButton")
@@ -187,8 +232,12 @@ local function btn(par,txt,col,fn)
   b.Font=Enum.Font.GothamBold
   b.BorderSizePixel=0
   b.Parent=par
-  local c=Instance.new("UICorner")c.CornerRadius=UDim.new(0,6)c.Parent=b
-  if fn then b.MouseButton1Click:Connect(fn)end
+  local c=Instance.new("UICorner")
+  c.CornerRadius=UDim.new(0,6)
+  c.Parent=b
+  if fn then
+    b.MouseButton1Click:Connect(fn)
+  end
   return b
 end
 
@@ -217,9 +266,14 @@ local function input(par,ph)
   b.Font=Enum.Font.Gotham
   b.BorderSizePixel=0
   b.Parent=par
-  local c=Instance.new("UICorner")c.CornerRadius=UDim.new(0,6)c.Parent=b
+  local c=Instance.new("UICorner")
+  c.CornerRadius=UDim.new(0,6)
+  c.Parent=b
   return b
-endlocal pbs={}
+end
+
+local pbs={}
+
 local function row(p)
   if pbs[p]then return end
   local r=Instance.new("Frame")
@@ -227,7 +281,9 @@ local function row(p)
   r.BackgroundColor3=Color3.fromRGB(24,32,42)
   r.BorderSizePixel=0
   r.Parent=PG
-  local rc=Instance.new("UICorner")rc.CornerRadius=UDim.new(0,6)rc.Parent=r
+  local rc=Instance.new("UICorner")
+  rc.CornerRadius=UDim.new(0,6)
+  rc.Parent=r
   local nl=Instance.new("TextLabel")
   nl.Size=UDim2.new(1,-80,0,14)
   nl.Position=UDim2.new(0,8,0,4)
@@ -259,7 +315,9 @@ local function row(p)
   t1.Font=Enum.Font.GothamBold
   t1.BorderSizePixel=0
   t1.Parent=r
-  local t1c=Instance.new("UICorner")t1c.CornerRadius=UDim.new(0,5)t1c.Parent=t1
+  local t1c=Instance.new("UICorner")
+  t1c.CornerRadius=UDim.new(0,5)
+  t1c.Parent=t1
   local t2=Instance.new("TextButton")
   t2.Size=UDim2.new(0,34,0,22)
   t2.Position=UDim2.new(1,-38,.5,-11)
@@ -270,15 +328,21 @@ local function row(p)
   t2.Font=Enum.Font.GothamBold
   t2.BorderSizePixel=0
   t2.Parent=r
-  local t2c=Instance.new("UICorner")t2c.CornerRadius=UDim.new(0,5)t2c.Parent=t2
+  local t2c=Instance.new("UICorner")
+  t2c.CornerRadius=UDim.new(0,5)
+  t2c.Parent=t2
   t1.MouseButton1Click:Connect(function()
     local h=hrp(p)
-    if h then tp(h.CFrame*CFrame.new(0,0,3))end
+    if h then
+      tp(h.CFrame*CFrame.new(0,0,3))
+    end
   end)
   t2.MouseButton1Click:Connect(function()
     local a=hrp(p)
     local b=hrp()
-    if a and b then a.CFrame=b.CFrame*CFrame.new(0,0,3)end
+    if a and b then
+      a.CFrame=b.CFrame*CFrame.new(0,0,3)
+    end
   end)
   task.spawn(function()
     while r.Parent do
@@ -294,11 +358,17 @@ local function row(p)
 end
 
 for _,p in ipairs(P:GetPlayers())do
-  if p~=L then row(p)end
+  if p~=L then
+    row(p)
+  end
 end
+
 P.PlayerAdded:Connect(function(p)
-  if p~=L then row(p)end
+  if p~=L then
+    row(p)
+  end
 end)
+
 P.PlayerRemoving:Connect(function(p)
   if pbs[p]then
     pbs[p].r:Destroy()
@@ -310,22 +380,30 @@ label(PM,"VELOCIDADE")
 local spdInp=input(PM,"WalkSpeed")
 btn(PM,"Aplicar Speed",VERDE,function()
   local h=hum()
-  if h then h.WalkSpeed=tonumber(spdInp.Text)or 16 end
+  if h then
+    h.WalkSpeed=tonumber(spdInp.Text)or 16
+  end
 end)
 btn(PM,"Reset Speed",Color3.fromRGB(60,70,90),function()
   local h=hum()
-  if h then h.WalkSpeed=16 end
+  if h then
+    h.WalkSpeed=16
+  end
 end)
 
 label(PM,"PULO")
 local jmpInp=input(PM,"JumpPower")
 btn(PM,"Aplicar Jump",VERDE,function()
   local h=hum()
-  if h then h.JumpPower=tonumber(jmpInp.Text)or 50 end
+  if h then
+    h.JumpPower=tonumber(jmpInp.Text)or 50
+  end
 end)
 btn(PM,"Reset Jump",Color3.fromRGB(60,70,90),function()
   local h=hum()
-  if h then h.JumpPower=50 end
+  if h then
+    h.JumpPower=50
+  end
 end)
 
 label(PM,"FLY")
@@ -343,7 +421,10 @@ modeBtn.TextSize=10
 modeBtn.Font=Enum.Font.GothamBold
 modeBtn.BorderSizePixel=0
 modeBtn.Parent=PM
-local mbc=Instance.new("UICorner")mbc.CornerRadius=UDim.new(0,6)mbc.Parent=modeBtn
+local mbc=Instance.new("UICorner")
+mbc.CornerRadius=UDim.new(0,6)
+mbc.Parent=modeBtn
+
 modeBtn.MouseButton1Click:Connect(function()
   if flyMode=="velocity"then
     flyMode="cframe"
@@ -375,35 +456,57 @@ btn(PM,"Toggle Fly",AZUL,function()
     flyCon=R.Heartbeat:Connect(function()
       local h=hrp()
       local hh=hum()
-      if not h or not hh then return end
+      if not h or not hh then
+        return
+      end
       local cam=WS.CurrentCamera
       local dir=Vector3.new(0,0,0)
-      if UIS:IsKeyDown(Enum.KeyCode.W)then dir=dir+cam.CFrame.LookVector end
-      if UIS:IsKeyDown(Enum.KeyCode.S)then dir=dir-cam.CFrame.LookVector end
-      if UIS:IsKeyDown(Enum.KeyCode.A)then dir=dir-cam.CFrame.RightVector*-1 end
-      if UIS:IsKeyDown(Enum.KeyCode.D)then dir=dir+cam.CFrame.RightVector end
-      if UIS:IsKeyDown(Enum.KeyCode.Space)then dir=dir+Vector3.new(0,1,0)end
-      if UIS:IsKeyDown(Enum.KeyCode.LeftControl)then dir=dir-Vector3.new(0,1,0)end
+      if UIS:IsKeyDown(Enum.KeyCode.W)then
+        dir=dir+cam.CFrame.LookVector
+      end
+      if UIS:IsKeyDown(Enum.KeyCode.S)then
+        dir=dir-cam.CFrame.LookVector
+      end
+      if UIS:IsKeyDown(Enum.KeyCode.A)then
+        dir=dir-cam.CFrame.RightVector
+      end
+      if UIS:IsKeyDown(Enum.KeyCode.D)then
+        dir=dir+cam.CFrame.RightVector
+      end
+      if UIS:IsKeyDown(Enum.KeyCode.Space)then
+        dir=dir+Vector3.new(0,1,0)
+      end
+      if UIS:IsKeyDown(Enum.KeyCode.LeftControl)then
+        dir=dir-Vector3.new(0,1,0)
+      end
       if flyMode=="velocity"then
         hh.PlatformStand=true
         h.Velocity=dir*flySpeed
       elseif flyMode=="cframe"then
         h.CFrame=h.CFrame+dir*(flySpeed/60)
       elseif flyMode=="bodyvelocity"then
-        if bv then bv.Velocity=dir*flySpeed end
+        if bv then
+          bv.Velocity=dir*flySpeed
+        end
       elseif flyMode=="antigravity"then
         hh.PlatformStand=true
         h.Velocity=dir*flySpeed+Vector3.new(0,0.5,0)
       end
     end)
   else
-    if flyCon then flyCon:Disconnect()end
+    if flyCon then
+      flyCon:Disconnect()
+    end
     local hh=hum()
-    if hh then hh.PlatformStand=false end
+    if hh then
+      hh.PlatformStand=false
+    end
     local h=hrp()
     if h then
       for _,v in ipairs(h:GetChildren())do
-        if v:IsA("BodyVelocity")then v:Destroy()end
+        if v:IsA("BodyVelocity")then
+          v:Destroy()
+        end
       end
     end
   end
@@ -422,13 +525,19 @@ btn(PM,"Toggle Noclip",VERDE,function()
   if ncOn then
     ncCon=R.Stepped:Connect(function()
       local c=L.Character
-      if not c then return end
+      if not c then
+        return
+      end
       for _,v in ipairs(c:GetDescendants())do
-        if v:IsA("BasePart")then v.CanCollide=false end
+        if v:IsA("BasePart")then
+          v.CanCollide=false
+        end
       end
     end)
   else
-    if ncCon then ncCon:Disconnect()end
+    if ncCon then
+      ncCon:Disconnect()
+    end
   end
 end)
 
@@ -440,16 +549,25 @@ btn(PM,"Toggle Inf Jump",AZUL,function()
   if ijOn then
     ijCon=UIS.JumpRequest:Connect(function()
       local h=hum()
-      if h then h:ChangeState(Enum.HumanoidStateType.Jumping)end
+      if h then
+        h:ChangeState(Enum.HumanoidStateType.Jumping)
+      end
     end)
   else
-    if ijCon then ijCon:Disconnect()end
+    if ijCon then
+      ijCon:Disconnect()
+    end
   end
 end)
 
 label(PM,"GRAVIDADE")
-btn(PM,"Gravity 0",VERDE,function()WS.Gravity=0 end)
-btn(PM,"Gravity Normal",Color3.fromRGB(60,70,90),function()WS.Gravity=196 end)-- ABA AIMBOT
+btn(PM,"Gravity 0",VERDE,function()
+  WS.Gravity=0
+end)
+btn(PM,"Gravity Normal",Color3.fromRGB(60,70,90),function()
+  WS.Gravity=196
+end)
+
 label(PA,"AIMBOT")
 local aimOn=false
 local aimCon
@@ -470,7 +588,11 @@ partBtn.TextSize=10
 partBtn.Font=Enum.Font.GothamBold
 partBtn.BorderSizePixel=0
 partBtn.Parent=PA
-local pbc=Instance.new("UICorner")pbc.CornerRadius=UDim.new(0,6)pbc.Parent=partBtn
+
+local pbc=Instance.new("UICorner")
+pbc.CornerRadius=UDim.new(0,6)
+pbc.Parent=partBtn
+
 partBtn.MouseButton1Click:Connect(function()
   if aimPart=="Head"then
     aimPart="Torso"
@@ -511,7 +633,9 @@ btn(PA,"Toggle Aimbot",VERDE,function()
   aimOn=not aimOn
   if aimOn then
     aimCon=R.RenderStepped:Connect(function()
-      if not UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton2)then return end
+      if not UIS:IsMouseButtonPressed(Enum.UserInputType.MouseButton2)then
+        return
+      end
       local target=getClosest()
       if target then
         local h=hrp(target)
@@ -531,7 +655,9 @@ btn(PA,"Toggle Aimbot",VERDE,function()
       end
     end)
   else
-    if aimCon then aimCon:Disconnect()end
+    if aimCon then
+      aimCon:Disconnect()
+    end
   end
 end)
 
@@ -547,17 +673,20 @@ btn(PA,"Toggle Triggerbot",AZUL,function()
         local c=L.Character
         if c then
           for _,t in ipairs(c:GetChildren())do
-            if t:IsA("Tool")then t:Activate()end
+            if t:IsA("Tool")then
+              t:Activate()
+            end
           end
         end
       end
     end)
   else
-    if tbCon then tbCon:Disconnect()end
+    if tbCon then
+      tbCon:Disconnect()
+    end
   end
 end)
 
--- ABA VISUAL
 label(PE,"ESP")
 local espOn=false
 local espFolder=Instance.new("Folder")
@@ -609,13 +738,19 @@ btn(PE,"Toggle ESP",VERDE,function()
   espOn=not espOn
   if espOn then
     for _,p in ipairs(P:GetPlayers())do
-      if p~=L then createESP(p)end
+      if p~=L then
+        createESP(p)
+      end
     end
     P.PlayerAdded:Connect(function(p)
-      if espOn and p~=L then createESP(p)end
+      if espOn and p~=L then
+        createESP(p)
+      end
     end)
   else
-    for _,v in ipairs(espFolder:GetChildren())do v:Destroy()end
+    for _,v in ipairs(espFolder:GetChildren())do
+      v:Destroy()
+    end
   end
 end)
 
@@ -627,35 +762,29 @@ btn(PE,"Toggle Invisibilidade",AZUL,function()
   if invOn then
     invCon=R.Heartbeat:Connect(function()
       local c=L.Character
-      if not c then return end
+      if not c then
+        return
+      end
       for _,v in ipairs(c:GetDescendants())do
-        if v:IsA("BasePart")then v.Transparency=1
-        elseif v:IsA("Decal")then v.Transparency=1 end
+        if v:IsA("BasePart")then
+          v.Transparency=1
+        elseif v:IsA("Decal")then
+          v.Transparency=1
+        end
       end
     end)
   else
-    if invCon then invCon:Disconnect()end
+    if invCon then
+      invCon:Disconnect()
+    end
     local c=L.Character
     if c then
       for _,v in ipairs(c:GetDescendants())do
-        if v:IsA("BasePart")then v.Transparency=0
-        elseif v:IsA("Decal")then v.Transparency=0 end
-      end
-    end
-  end
-end)
-
-label(PE,"COR")
-local corInp=input(PE,"R,G,B (ex: 255,0,0)")
-btn(PE,"Aplicar Cor",VERDE,function()
-  local c=L.Character
-  if not c then return end
-  local parts=string.split(corInp.Text,",")
-  if #parts>=3 then
-    local r,g,b=tonumber(parts[1]),tonumber(parts[2]),tonumber(parts[3])
-    if r and g and b then
-      for _,v in ipairs(c:GetDescendants())do
-        if v:IsA("BasePart")then v.Color=Color3.fromRGB(r,g,b)end
+        if v:IsA("BasePart")then
+          v.Transparency=0
+        elseif v:IsA("Decal")then
+          v.Transparency=0
+        end
       end
     end
   end
@@ -670,13 +799,19 @@ end)
 
 local function getMyVehicle()
   local c=L.Character
-  if not c then return nil end
+  if not c then
+    return nil
+  end
   local hh=c:FindFirstChildOfClass("Humanoid")
-  if not hh then return nil end
+  if not hh then
+    return nil
+  end
   local seat=hh.SeatPart
   if seat then
     local veh=seat:FindFirstAncestorOfClass("Model")
-    if veh and veh.PrimaryPart then return veh end
+    if veh and veh.PrimaryPart then
+      return veh
+    end
     return seat.Parent
   end
   return nil
@@ -698,7 +833,9 @@ end)
 
 btn(PE,"Parar Carro",Color3.fromRGB(200,60,80),function()
   local veh=getMyVehicle()
-  if not veh then return end
+  if not veh then
+    return
+  end
   for _,v in ipairs(veh:GetDescendants())do
     if v:IsA("BasePart")then
       v.Velocity=Vector3.new(0,0,0)
