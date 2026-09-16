@@ -586,4 +586,330 @@ end)
 
 label(PM,"GRAVIDADE")
 btn(PM,"🌍 Gravity 0",VERDE,function()WS.Gravity=0 end)
-btn(PM,"🌍 Gravity 196 (normal)",Color3.fromRGB(60,70,90),function()WS.Gravity=196 end)
+btn(PM,"🌍 Gravity 196 (normal)",Color3.fromRGB(60,70,90),function()WS.Gravity=196 end)-- ===== ABA COMBATE =====
+label(PC,"DEFESA")
+local gmOn=false
+local gmCon
+btn(PC,"🛡 Toggle Godmode",VERDE,function()
+  gmOn=not gmOn
+  if gmOn then
+    gmCon=R.Heartbeat:Connect(function()
+      local h=hum()
+      if h then h.MaxHealth=math.huge h.Health=math.huge end
+    end)
+  else
+    if gmCon then gmCon:Disconnect()end
+    local h=hum()if h then h.MaxHealth=100 h.Health=100 end
+  end
+end)
+
+label(PC,"ATAQUE")
+btn(PC,"💀 Kill All",Color3.fromRGB(200,60,80),function()
+  for _,p in ipairs(P:GetPlayers())do
+    if p~=L then
+      local h=hum(p)
+      if h then h.Health=0 end
+    end
+  end
+end)
+
+btn(PC,"🌀 Fling Players",AZUL,function()
+  for _,p in ipairs(P:GetPlayers())do
+    if p~=L then
+      local h=hrp(p)
+      if h then h.Velocity=Vector3.new(math.random(-500,500),math.random(200,500),math.random(-500,500))end
+    end
+  end
+end)
+
+label(PC,"ARMA")
+local rapidOn=false
+local rapidCon
+btn(PC,"🔫 Toggle Rapid Fire",VERDE,function()
+  rapidOn=not rapidOn
+  if rapidOn then
+    rapidCon=R.Heartbeat:Connect(function()
+      local c=L.Character if not c then return end
+      for _,t in ipairs(c:GetChildren())do
+        if t:IsA("Tool")then t:Activate()end
+      end
+    end)
+  else
+    if rapidCon then rapidCon:Disconnect()end
+  end
+end)
+
+-- ===== ABA VISUAL =====
+label(PV,"INVISIBILIDADE")
+local invOn=false
+local invMode="local"
+local invCon
+
+local modeFrame=Instance.new("Frame")
+modeFrame.Size=UDim2.new(1,0,0,30)
+modeFrame.BackgroundColor3=Color3.fromRGB(20,28,38)
+modeFrame.BorderSizePixel=0
+modeFrame.Parent=PV
+local mfc=Instance.new("UICorner")mfc.CornerRadius=UDim.new(0,8)mfc.Parent=modeFrame
+local modeBtn2=Instance.new("TextButton")
+modeBtn2.Size=UDim2.new(1,0,1,0)
+modeBtn2.BackgroundTransparency=1
+modeBtn2.Text="Modo: LOCAL (só você não vê)"
+modeBtn2.TextColor3=VERDE
+modeBtn2.TextSize=10
+modeBtn2.Font=Enum.Font.Gotham
+modeBtn2.Parent=modeFrame
+modeBtn2.MouseButton1Click:Connect(function()
+  if invMode=="local"then
+    invMode="global"
+    modeBtn2.Text="Modo: GLOBAL (todos não veem)"
+  else
+    invMode="local"
+    modeBtn2.Text="Modo: LOCAL (só você não vê)"
+  end
+end)
+
+btn(PV,"👻 Toggle Invisibilidade",AZUL,function()
+  invOn=not invOn
+  if invOn then
+    log("Invisibilidade ON ("..invMode..")")
+    if invCon then invCon:Disconnect()end
+    if invMode=="local"then
+      local c=L.Character
+      if not c then return end
+      for _,v in ipairs(c:GetDescendants())do
+        if v:IsA("BasePart")or v:IsA("Decal")then v.LocalTransparencyModifier=1 end
+      end
+    else
+      invCon=R.Heartbeat:Connect(function()
+        local c=L.Character
+        if not c then return end
+        for _,v in ipairs(c:GetDescendants())do
+          if v:IsA("BasePart")then v.Transparency=1
+          elseif v:IsA("Decal")then v.Transparency=1
+          end
+        end
+      end)
+    end
+  else
+    if invCon then invCon:Disconnect()end
+    local c=L.Character
+    if c then
+      for _,v in ipairs(c:GetDescendants())do
+        if v:IsA("BasePart")then
+          v.Transparency=0
+          v.LocalTransparencyModifier=0
+        elseif v:IsA("Decal")then
+          v.Transparency=0
+        end
+      end
+    end
+  end
+end)
+
+label(PV,"TRANSPARÊNCIA")
+local transInp=input(PV,"Transparência (0 a 1)")
+btn(PV,"🎨 Aplicar Transparência",VERDE,function()
+  local v=tonumber(transInp.Text)or 0.5
+  local c=L.Character
+  if not c then return end
+  for _,p in ipairs(c:GetDescendants())do
+    if p:IsA("BasePart")then p.Transparency=v end
+  end
+end)
+
+label(PV,"ACESSÓRIOS")
+btn(PV,"🎩 Remover Acessórios",AZUL,function()
+  local c=L.Character
+  if not c then return end
+  for _,v in ipairs(c:GetDescendants())do
+    if v:IsA("Accessory")or v:IsA("Hat")then v:Destroy()end
+  end
+end)
+
+label(PV,"COR DO PERSONAGEM")
+local corInp=input(PV,"Cor (ex: 255,0,0)")
+btn(PV,"🎨 Aplicar Cor",VERDE,function()
+  local c=L.Character
+  if not c then return end
+  local parts=string.split(corInp.Text,",")
+  if #parts>=3 then
+    local r,g,b=tonumber(parts[1]),tonumber(parts[2]),tonumber(parts[3])
+    if r and g and b then
+      for _,v in ipairs(c:GetDescendants())do
+        if v:IsA("BasePart")then v.Color=Color3.fromRGB(r,g,b)end
+      end
+    end
+  end
+end)-- ===== ABA VEÍCULO =====
+label(PVe,"FLING CAR")
+local carForce=500
+
+local forceInp=input(PVe,"Força (padrão 500)")
+btn(PVe,"⚙ Aplicar Força",AZUL,function()
+  carForce=tonumber(forceInp.Text)or 500
+end)
+
+local function getMyVehicle()
+  local c=L.Character
+  if not c then return nil end
+  local hh=c:FindFirstChildOfClass("Humanoid")
+  if not hh then return nil end
+  local seat=hh.SeatPart
+  if seat then
+    local veh=seat:FindFirstAncestorOfClass("Model")
+    if veh and veh.PrimaryPart then return veh end
+    return seat.Parent
+  end
+  return nil
+end
+
+btn(PVe,"🚀 Fling Car (Jogar Longe)",VERDE,function()
+  local veh=getMyVehicle()
+  if not veh then
+    log("Você não está em um veículo")
+    return
+  end
+  local parts=veh:GetDescendants()
+  for _,v in ipairs(parts)do
+    if v:IsA("BasePart")and v~=hrp()then
+      v.Velocity=Vector3.new(
+        math.random(-carForce,carForce),
+        math.random(carForce*0.8,carForce*1.5),
+        math.random(-carForce,carForce)
+      )
+      v.RotVelocity=Vector3.new(
+        math.random(-carForce,carForce),
+        math.random(-carForce,carForce),
+        math.random(-carForce,carForce)
+      )
+    end
+  end
+  log("Carro flingado com força "..carForce)
+end)
+
+btn(PVe,"💥 Fling Car (Sair voando)",AZUL,function()
+  local veh=getMyVehicle()
+  if not veh then
+    log("Você não está em um veículo")
+    return
+  end
+  for _,v in ipairs(veh:GetDescendants())do
+    if v:IsA("BasePart")then
+      v.Velocity=Vector3.new(0,carForce*2,0)
+    end
+  end
+end)
+
+btn(PVe,"🔄 Flip Car (Virar carro)",VERDE,function()
+  local veh=getMyVehicle()
+  if not veh then
+    log("Você não está em um veículo")
+    return
+  end
+  local pp=veh.PrimaryPart or veh:FindFirstChildWhichIsA("BasePart")
+  if pp then
+    pp.CFrame=pp.CFrame*CFrame.Angles(math.rad(180),0,0)
+  end
+end)
+
+btn(PVe,"🛑 Parar Carro",Color3.fromRGB(200,60,80),function()
+  local veh=getMyVehicle()
+  if not veh then return end
+  for _,v in ipairs(veh:GetDescendants())do
+    if v:IsA("BasePart")then
+      v.Velocity=Vector3.new(0,0,0)
+      v.RotVelocity=Vector3.new(0,0,0)
+    end
+  end
+end)
+
+btn(PVe,"💣 Deletar Carro",Color3.fromRGB(180,40,60),function()
+  local veh=getMyVehicle()
+  if not veh then return end
+  veh:Destroy()
+  log("Carro deletado")
+end)
+
+-- ===== ABA REDTEAM =====
+label(PRT,"MONITORAMENTO")
+
+btn(PRT,"📡 Ativar Remote Sniffer",AZUL,function()
+  pcall(function()
+    if getrawmetatable and setreadonly and newcclosure then
+      local mt=getrawmetatable(game)
+      local oldNC=mt.__namecall
+      setreadonly(mt,false)
+      mt.__namecall=newcclosure(function(self,...)
+        local m=getnamecallmethod()
+        if m=="FireServer"or m=="InvokeServer"then
+          print("[REMOTE]",self:GetFullName(),m)
+        end
+        return oldNC(self,...)
+      end)
+      setreadonly(mt,true)
+      log("Sniffer ON")
+    else
+      log("Sniffer indisponível")
+    end
+  end)
+end)
+
+btn(PRT,"🔍 Property Monitor",VERDE,function()
+  pcall(function()
+    if getrawmetatable and setreadonly and newcclosure then
+      local mt=getrawmetatable(game)
+      local oldI=mt.__index
+      setreadonly(mt,false)
+      mt.__index=newcclosure(function(t,k)
+        if typeof(t)=="Instance"and t:IsA("Humanoid")then
+          if k=="WalkSpeed"or k=="JumpPower"or k=="Health"then
+            print("[MONITOR]",t:GetFullName(),k,"=",oldI(t,k))
+          end
+        end
+        return oldI(t,k)
+      end)
+      setreadonly(mt,true)
+      log("Monitor ON")
+    end
+  end)
+end)
+
+btn(PRT,"🔎 Testar Detecção de Executor",AZUL,function()
+  log("Testando detecção...")
+  if getrawmetatable then log("  getrawmetatable: SIM")else log("  getrawmetatable: NAO")end
+  if hookfunction then log("  hookfunction: SIM")else log("  hookfunction: NAO")end
+  if setreadonly then log("  setreadonly: SIM")else log("  setreadonly: NAO")end
+  if getgenv then log("  getgenv: SIM")else log("  getgenv: NAO")end
+  log("Teste concluído")
+end)
+
+btn(PRT,"🚨 PANIC BUTTON (resetar tudo)",Color3.fromRGB(220,60,80),function()
+  log("PANIC - resetando...")
+  local c=L.Character
+  if c then
+    local hh=c:FindFirstChildOfClass("Humanoid")
+    if hh then
+      hh.MaxHealth=100
+      hh.Health=100
+      hh.WalkSpeed=16
+      hh.JumpPower=50
+      hh.PlatformStand=false
+    end
+    for _,v in ipairs(c:GetDescendants())do
+      if v:IsA("BasePart")then
+        v.Transparency=0
+        v.LocalTransparencyModifier=0
+        v.CanCollide=true
+      elseif v:IsA("Decal")then
+        v.Transparency=0
+      end
+    end
+  end
+  WS.Gravity=196
+  log("PANIC concluído - tudo resetado")
+end)
+
+-- ===== FIM =====
+log("=== EGZODZ HUB v2.0 carregado ===")
+log("by egzodz | verde+azul | red team")
