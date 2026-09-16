@@ -216,7 +216,7 @@ local function input(par,ph)
   b.Parent=par
   local c=Instance.new("UICorner")c.CornerRadius=UDim.new(0,6)c.Parent=b
   return b
-end)-- ABA PLAYERS
+end-- ABA PLAYERS
 local sb=input(PG,"Buscar jogador...")
 local PLF=Instance.new("Frame")
 PLF.Size=UDim2.new(1,0,0,0)
