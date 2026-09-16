@@ -1,7 +1,7 @@
 -- ============================================
--- EGZODZ HUB v1.0
+-- EGZODZ HUB v2.0
 -- by egzodz
--- Red Team Edition - Anti-Cheat Testing
+-- Verde + Azul Edition
 -- ============================================
 
 local P=game:GetService("Players")
@@ -12,11 +12,12 @@ local CP=game:GetService("ContentProvider")
 local UIS=game:GetService("UserInputService")
 local WS=game:GetService("Workspace")
 local LT=game:GetService("Lighting")
-local TS=game:GetService("TeleportService")
-local CH=game:GetService("Chat")
 local L=P.LocalPlayer
 
 if C:FindFirstChild("EGZODZHUB")then C.EGZODZHUB:Destroy()end
+
+local VERDE=Color3.fromRGB(0,220,140)
+local AZUL=Color3.fromRGB(40,150,255)
 
 local function log(m)print("[EGZODZ] "..tostring(m))end
 local function hrp(p)p=p or L local c=p.Character or p.CharacterAdded:Wait()return c:FindFirstChild("HumanoidRootPart")or c:WaitForChild("HumanoidRootPart",2)end
@@ -31,7 +32,7 @@ pcall(function()
     local oi=mt.__index
     setreadonly(mt,false)
     mt.__index=newcclosure(function(t,k)
-      if k=="WalkSpeed" and typeof(t)=="Instance" and t:IsA("Humanoid") then
+      if k=="WalkSpeed"and typeof(t)=="Instance"and t:IsA("Humanoid")then
         if oi(t,k)~=16 then return 16 end
       end
       return oi(t,k)
@@ -47,18 +48,17 @@ pcall(function()
   end
 end)
 
--- ===== UI =====
+-- ===== UI BASE =====
 local S=Instance.new("ScreenGui")
 S.Name="EGZODZHUB"
 S.ResetOnSpawn=false
 S.ZIndexBehavior=Enum.ZIndexBehavior.Sibling
 S.Parent=C
 
--- Botão flutuante
 local B=Instance.new("TextButton")
 B.Size=UDim2.new(0,64,0,64)
 B.Position=UDim2.new(0,20,.4,0)
-B.BackgroundColor3=Color3.fromRGB(140,60,255)
+B.BackgroundColor3=VERDE
 B.Text="EZ"
 B.TextColor3=Color3.new(1,1,1)
 B.TextSize=20
@@ -68,17 +68,16 @@ B.Draggable=true
 B.Parent=S
 
 local bc=Instance.new("UICorner")bc.CornerRadius=UDim.new(1,0)bc.Parent=B
-local bs=Instance.new("UIStroke")bs.Color=Color3.fromRGB(200,140,255)bs.Thickness=2 bs.Parent=B
+local bs=Instance.new("UIStroke")bs.Color=AZUL bs.Thickness=2 bs.Parent=B
 local bg=Instance.new("UIGradient")
-bg.Color=ColorSequence.new(Color3.fromRGB(180,80,255),Color3.fromRGB(60,130,255))
+bg.Color=ColorSequence.new(VERDE,AZUL)
 bg.Rotation=45
 bg.Parent=B
 
--- Painel principal
 local M=Instance.new("Frame")
-M.Size=UDim2.new(0,460,0,600)
-M.Position=UDim2.new(.5,-230,.5,-300)
-M.BackgroundColor3=Color3.fromRGB(14,14,22)
+M.Size=UDim2.new(0,480,0,600)
+M.Position=UDim2.new(.5,-240,.5,-300)
+M.BackgroundColor3=Color3.fromRGB(16,20,26)
 M.BorderSizePixel=0
 M.Draggable=true
 M.Visible=false
@@ -86,16 +85,11 @@ M.ClipsDescendants=true
 M.Parent=S
 
 local mc=Instance.new("UICorner")mc.CornerRadius=UDim.new(0,16)mc.Parent=M
-local ms=Instance.new("UIStroke")
-ms.Color=Color3.fromRGB(140,60,255)
-ms.Thickness=1.5
-ms.Transparency=.2
-ms.Parent=M
+local ms=Instance.new("UIStroke")ms.Color=VERDE ms.Thickness=1.5 ms.Transparency=.3 ms.Parent=M
 
--- Header
 local H=Instance.new("Frame")
-H.Size=UDim2.new(1,0,0,60)
-H.BackgroundColor3=Color3.fromRGB(25,25,40)
+H.Size=UDim2.new(1,0,0,64)
+H.BackgroundColor3=Color3.fromRGB(20,28,38)
 H.BorderSizePixel=0
 H.Parent=M
 
@@ -103,84 +97,84 @@ local hc=Instance.new("UICorner")hc.CornerRadius=UDim.new(0,16)hc.Parent=H
 local hcv=Instance.new("Frame")
 hcv.Size=UDim2.new(1,0,.5,0)
 hcv.Position=UDim2.new(0,0,.5,0)
-hcv.BackgroundColor3=Color3.fromRGB(25,25,40)
+hcv.BackgroundColor3=Color3.fromRGB(20,28,38)
 hcv.BorderSizePixel=0
 hcv.Parent=H
 local hg=Instance.new("UIGradient")
-hg.Color=ColorSequence.new(Color3.fromRGB(140,60,255),Color3.fromRGB(60,130,255))
+hg.Color=ColorSequence.new(VERDE,AZUL)
 hg.Rotation=90
 hg.Parent=H
 
 local ico=Instance.new("TextLabel")
-ico.Size=UDim2.new(0,55,1,0)
+ico.Size=UDim2.new(0,60,1,0)
 ico.BackgroundTransparency=1
 ico.Text="⚡"
-ico.TextSize=28
+ico.TextSize=30
 ico.Font=Enum.Font.GothamBold
+ico.TextColor3=VERDE
 ico.Parent=H
 
 local ti=Instance.new("TextLabel")
-ti.Size=UDim2.new(1,-140,0,26)
-ti.Position=UDim2.new(0,60,0,10)
+ti.Size=UDim2.new(1,-160,0,28)
+ti.Position=UDim2.new(0,65,0,12)
 ti.BackgroundTransparency=1
 ti.Text="EGZODZ HUB"
 ti.TextColor3=Color3.new(1,1,1)
-ti.TextSize=20
+ti.TextSize=21
 ti.Font=Enum.Font.GothamBlack
 ti.TextXAlignment=Enum.TextXAlignment.Left
 ti.Parent=H
 
 local su=Instance.new("TextLabel")
-su.Size=UDim2.new(1,-140,0,14)
-su.Position=UDim2.new(0,60,0,36)
+su.Size=UDim2.new(1,-160,0,14)
+su.Position=UDim2.new(0,65,0,40)
 su.BackgroundTransparency=1
-su.Text="v1.0 • by egzodz • red team"
-su.TextColor3=Color3.fromRGB(210,210,240)
+su.Text="v2.0 • verde+azul • red team"
+su.TextColor3=AZUL
 su.TextSize=10
 su.Font=Enum.Font.Gotham
 su.TextXAlignment=Enum.TextXAlignment.Left
 su.Parent=H
 
--- Indicador ON
 local onDot=Instance.new("Frame")
 onDot.Size=UDim2.new(0,10,0,10)
-onDot.Position=UDim2.new(1,-100,0,15)
-onDot.BackgroundColor3=Color3.fromRGB(80,220,120)
+onDot.Position=UDim2.new(1,-110,0,16)
+onDot.BackgroundColor3=VERDE
 onDot.BorderSizePixel=0
 onDot.Parent=H
 local onC=Instance.new("UICorner")onC.CornerRadius=UDim.new(1,0)onC.Parent=onDot
 local onT=Instance.new("TextLabel")
-onT.Size=UDim2.new(0,50,0,12)
-onT.Position=UDim2.new(1,-86,0,14)
+onT.Size=UDim2.new(0,70,0,12)
+onT.Position=UDim2.new(1,-96,0,15)
 onT.BackgroundTransparency=1
 onT.Text="BYPASS ON"
-onT.TextColor3=Color3.fromRGB(80,220,120)
+onT.TextColor3=VERDE
 onT.TextSize=9
 onT.Font=Enum.Font.GothamBold
 onT.TextXAlignment=Enum.TextXAlignment.Left
 onT.Parent=H
 
 local cl=Instance.new("TextButton")
-cl.Size=UDim2.new(0,38,0,38)
-cl.Position=UDim2.new(1,-46,0,11)
+cl.Size=UDim2.new(0,40,0,40)
+cl.Position=UDim2.new(1,-48,0,12)
 cl.BackgroundColor3=Color3.fromRGB(220,60,80)
 cl.Text="✕"
 cl.TextColor3=Color3.new(1,1,1)
-cl.TextSize=18
+cl.TextSize=20
 cl.Font=Enum.Font.GothamBold
 cl.BorderSizePixel=0
 cl.Parent=H
-local cc=Instance.new("UICorner")cc.CornerRadius=UDim.new(0,9)cc.Parent=cl
+local cc=Instance.new("UICorner")cc.CornerRadius=UDim.new(0,10)cc.Parent=cl
 
 local open=false
 local function setP(s)
   open=s
   if s then
     M.Visible=true
-    M.Size=UDim2.new(0,460,0,0)
-    tw(M,.3,{Size=UDim2.new(0,460,0,600)})
+    M.Size=UDim2.new(0,480,0,0)
+    tw(M,.3,{Size=UDim2.new(0,480,0,600)})
   else
-    tw(M,.2,{Size=UDim2.new(0,460,0,0)})
+    tw(M,.2,{Size=UDim2.new(0,480,0,0)})
     task.wait(.2)
     M.Visible=false
   end
@@ -189,46 +183,37 @@ B.MouseButton1Click:Connect(function()setP(not open)end)
 cl.MouseButton1Click:Connect(function()setP(false)end)
 task.defer(function()setP(true)end)
 
--- Abas
-local TB=Instance.new("ScrollingFrame")
-TB.Size=UDim2.new(1,-20,0,38)
-TB.Position=UDim2.new(0,10,0,70)
-TB.BackgroundColor3=Color3.fromRGB(20,20,32)
-TB.BorderSizePixel=0
-TB.ScrollBarThickness=2
-TB.CanvasSize=UDim2.new(0,0,0,0)
-TB.AutomaticCanvasSize=Enum.AutomaticSize.X
-TB.ScrollingDirection=Enum.ScrollingDirection.X
-TB.Parent=M
-local tbc=Instance.new("UICorner")tbc.CornerRadius=UDim.new(0,8)tbc.Parent=TB
-local tbl=Instance.new("UIListLayout")
-tbl.FillDirection=Enum.FillDirection.Horizontal
-tbl.Padding=UDim.new(0,3)
-tbl.VerticalAlignment=Enum.VerticalAlignment.Center
-tbl.Parent=TB
-local tbp=Instance.new("UIPadding")
-tbp.PaddingLeft=UDim.new(0,3)
-tbp.PaddingRight=UDim.new(0,3)
-tbp.Parent=TB
+local SB=Instance.new("ScrollingFrame")
+SB.Size=UDim2.new(0,110,1,-150)
+SB.Position=UDim2.new(0,10,0,74)
+SB.BackgroundColor3=Color3.fromRGB(20,28,38)
+SB.BorderSizePixel=0
+SB.ScrollBarThickness=2
+SB.CanvasSize=UDim2.new(0,0,0,0)
+SB.AutomaticCanvasSize=Enum.AutomaticSize.Y
+SB.Parent=M
+local sbc=Instance.new("UICorner")sbc.CornerRadius=UDim.new(0,10)sbc.Parent=SB
+local sbl=Instance.new("UIListLayout")sbl.Padding=UDim.new(0,4)sbl.Parent=SB
+local sbp=Instance.new("UIPadding")sbp.PaddingTop=UDim.new(0,8)sbp.PaddingLeft=UDim.new(0,6)sbp.PaddingRight=UDim.new(0,6)sbp.Parent=SB
 
 local CT=Instance.new("Frame")
-CT.Size=UDim2.new(1,-20,1,-125)
-CT.Position=UDim2.new(0,10,0,115)
+CT.Size=UDim2.new(1,-140,1,-150)
+CT.Position=UDim2.new(0,130,0,74)
 CT.BackgroundTransparency=1
 CT.Parent=M
 
 local pages={}
 local function tab(n,i)
   local b=Instance.new("TextButton")
-  b.Size=UDim2.new(0,78,1,-8)
-  b.BackgroundColor3=Color3.fromRGB(32,32,50)
+  b.Size=UDim2.new(1,0,0,36)
+  b.BackgroundColor3=Color3.fromRGB(28,36,48)
   b.Text=i.." "..n
-  b.TextColor3=Color3.fromRGB(180,180,200)
+  b.TextColor3=Color3.fromRGB(180,200,220)
   b.TextSize=10
   b.Font=Enum.Font.GothamBold
   b.BorderSizePixel=0
-  b.Parent=TB
-  local c=Instance.new("UICorner")c.CornerRadius=UDim.new(0,6)c.Parent=b
+  b.Parent=SB
+  local c=Instance.new("UICorner")c.CornerRadius=UDim.new(0,8)c.Parent=b
   local p=Instance.new("ScrollingFrame")
   p.Size=UDim2.new(1,0,1,0)
   p.BackgroundTransparency=1
@@ -243,10 +228,10 @@ local function tab(n,i)
   b.MouseButton1Click:Connect(function()
     for _,v in pairs(pages)do
       v.p.Visible=false
-      tw(v.b,.15,{BackgroundColor3=Color3.fromRGB(32,32,50),TextColor3=Color3.fromRGB(180,180,200)})
+      tw(v.b,.15,{BackgroundColor3=Color3.fromRGB(28,36,48),TextColor3=Color3.fromRGB(180,200,220)})
     end
     p.Visible=true
-    tw(b,.15,{BackgroundColor3=Color3.fromRGB(140,60,255),TextColor3=Color3.new(1,1,1)})
+    tw(b,.15,{BackgroundColor3=VERDE,TextColor3=Color3.new(1,1,1)})
   end)
   return p
 end
@@ -256,26 +241,32 @@ local PP=tab("Salvos","📍")
 local PM=tab("Move","🏃")
 local PC=tab("Combate","⚔️")
 local PV=tab("Visual","👁")
-local PI=tab("Itens","🎒")
-local PW=tab("Mundo","🌍")
-local PS=tab("Social","💬")
+local PVe=tab("Veículo","🚗")
 local PRT=tab("RedTeam","🛡")
 task.defer(function()pages["Players"].b:Fire("MouseButton1Click")end)
 
 local function btn(par,txt,col,fn)
   local b=Instance.new("TextButton")
-  b.Size=UDim2.new(1,0,0,32)
-  b.BackgroundColor3=col or Color3.fromRGB(45,45,65)
+  b.Size=UDim2.new(1,0,0,34)
+  b.BackgroundColor3=col or Color3.fromRGB(40,50,65)
   b.Text=txt
-  b.TextColor3=Color3.fromRGB(235,235,245)
+  b.TextColor3=Color3.fromRGB(230,240,250)
   b.TextSize=11
   b.Font=Enum.Font.GothamBold
   b.BorderSizePixel=0
   b.Parent=par
-  local c=Instance.new("UICorner")c.CornerRadius=UDim.new(0,7)c.Parent=b
-  local st=Instance.new("UIStroke")st.Color=Color3.fromRGB(90,90,130)st.Thickness=1 st.Transparency=.5 st.Parent=b
-  b.MouseEnter:Connect(function()tw(b,.15,{BackgroundColor3=Color3.fromRGB(math.min(col and col.R*255+30 or 75,255)/255,math.min(col and col.G*255+30 or 75,255)/255,math.min(col and col.B*255+30 or 95,255)/255)})end)
-  b.MouseLeave:Connect(function()tw(b,.15,{BackgroundColor3=col or Color3.fromRGB(45,45,65)})end)
+  local c=Instance.new("UICorner")c.CornerRadius=UDim.new(0,8)c.Parent=b
+  local st=Instance.new("UIStroke")
+  st.Color=col==VERDE and AZUL or (col==AZUL and VERDE or Color3.fromRGB(80,100,130))
+  st.Thickness=1
+  st.Transparency=.5
+  st.Parent=b
+  b.MouseEnter:Connect(function()
+    tw(b,.15,{BackgroundColor3=col==VERDE and AZUL or (col==AZUL and VERDE or Color3.fromRGB(55,70,90))})
+  end)
+  b.MouseLeave:Connect(function()
+    tw(b,.15,{BackgroundColor3=col or Color3.fromRGB(40,50,65)})
+  end)
   if fn then b.MouseButton1Click:Connect(fn)end
   return b
 end
@@ -285,7 +276,7 @@ local function label(par,txt)
   l.Size=UDim2.new(1,0,0,18)
   l.BackgroundTransparency=1
   l.Text=txt
-  l.TextColor3=Color3.fromRGB(150,150,180)
+  l.TextColor3=VERDE
   l.TextSize=10
   l.Font=Enum.Font.GothamBlack
   l.TextXAlignment=Enum.TextXAlignment.Left
@@ -295,22 +286,21 @@ end
 
 local function input(par,ph)
   local b=Instance.new("TextBox")
-  b.Size=UDim2.new(1,0,0,28)
-  b.BackgroundColor3=Color3.fromRGB(20,20,32)
+  b.Size=UDim2.new(1,0,0,30)
+  b.BackgroundColor3=Color3.fromRGB(20,28,38)
   b.Text=""
   b.PlaceholderText=ph
   b.TextColor3=Color3.new(1,1,1)
-  b.PlaceholderColor3=Color3.fromRGB(120,120,150)
+  b.PlaceholderColor3=Color3.fromRGB(100,120,150)
   b.TextSize=11
   b.Font=Enum.Font.Gotham
   b.BorderSizePixel=0
   b.Parent=par
-  local c=Instance.new("UICorner")c.CornerRadius=UDim.new(0,6)c.Parent=b
-  local p=Instance.new("UIPadding")p.PaddingLeft=UDim.new(0,8)p.Parent=b
+  local c=Instance.new("UICorner")c.CornerRadius=UDim.new(0,8)c.Parent=b
+  local p=Instance.new("UIPadding")p.PaddingLeft=UDim.new(0,10)p.Parent=b
+  local s=Instance.new("UIStroke")s.Color=AZUL s.Thickness=1 s.Transparency=.6 s.Parent=b
   return b
-end
-
--- ===== ABA PLAYERS =====
+end-- ===== ABA PLAYERS =====
 local sb=input(PG,"🔍 Buscar jogador...")
 local PLF=Instance.new("Frame")
 PLF.Size=UDim2.new(1,0,0,0)
@@ -323,26 +313,26 @@ local pbs={}
 local function row(p)
   if pbs[p]then return end
   local r=Instance.new("Frame")
-  r.Size=UDim2.new(1,0,0,42)
-  r.BackgroundColor3=Color3.fromRGB(25,25,38)
+  r.Size=UDim2.new(1,0,0,44)
+  r.BackgroundColor3=Color3.fromRGB(24,32,42)
   r.BorderSizePixel=0
   r.Parent=PLF
   local rc=Instance.new("UICorner")rc.CornerRadius=UDim.new(0,8)rc.Parent=r
-  local st=Instance.new("UIStroke")st.Color=Color3.fromRGB(60,60,90)st.Thickness=1 st.Transparency=.6 st.Parent=r
+  local st=Instance.new("UIStroke")st.Color=AZUL st.Thickness=1 st.Transparency=.6 st.Parent=r
   local av=Instance.new("ImageLabel")
-  av.Size=UDim2.new(0,32,0,32)
-  av.Position=UDim2.new(0,5,.5,-16)
-  av.BackgroundColor3=Color3.fromRGB(50,50,70)
+  av.Size=UDim2.new(0,34,0,34)
+  av.Position=UDim2.new(0,5,.5,-17)
+  av.BackgroundColor3=Color3.fromRGB(40,50,65)
   av.BorderSizePixel=0
   av.Image="rbxthumb://type=AvatarHeadShot&id="..p.UserId.."&w=48&h=48"
   av.Parent=r
   local avc=Instance.new("UICorner")avc.CornerRadius=UDim.new(1,0)avc.Parent=av
   local nl=Instance.new("TextLabel")
   nl.Size=UDim2.new(1,-160,0,16)
-  nl.Position=UDim2.new(0,44,0,6)
+  nl.Position=UDim2.new(0,46,0,7)
   nl.BackgroundTransparency=1
   nl.Text=p.Name
-  nl.TextColor3=Color3.fromRGB(240,240,255)
+  nl.TextColor3=Color3.fromRGB(240,250,255)
   nl.TextSize=11
   nl.Font=Enum.Font.GothamBold
   nl.TextXAlignment=Enum.TextXAlignment.Left
@@ -350,36 +340,36 @@ local function row(p)
   nl.Parent=r
   local il=Instance.new("TextLabel")
   il.Size=UDim2.new(1,-160,0,11)
-  il.Position=UDim2.new(0,44,0,24)
+  il.Position=UDim2.new(0,46,0,26)
   il.BackgroundTransparency=1
   il.Text="..."
-  il.TextColor3=Color3.fromRGB(150,150,180)
+  il.TextColor3=VERDE
   il.TextSize=9
   il.Font=Enum.Font.Gotham
   il.TextXAlignment=Enum.TextXAlignment.Left
   il.Parent=r
   local t1=Instance.new("TextButton")
-  t1.Size=UDim2.new(0,38,0,24)
-  t1.Position=UDim2.new(1,-84,.5,-12)
-  t1.BackgroundColor3=Color3.fromRGB(80,140,240)
+  t1.Size=UDim2.new(0,40,0,26)
+  t1.Position=UDim2.new(1,-86,.5,-13)
+  t1.BackgroundColor3=AZUL
   t1.Text="TP"
   t1.TextColor3=Color3.new(1,1,1)
   t1.TextSize=10
   t1.Font=Enum.Font.GothamBold
   t1.BorderSizePixel=0
   t1.Parent=r
-  local t1c=Instance.new("UICorner")t1c.CornerRadius=UDim.new(0,5)t1c.Parent=t1
+  local t1c=Instance.new("UICorner")t1c.CornerRadius=UDim.new(0,6)t1c.Parent=t1
   local t2=Instance.new("TextButton")
-  t2.Size=UDim2.new(0,38,0,24)
-  t2.Position=UDim2.new(1,-42,.5,-12)
-  t2.BackgroundColor3=Color3.fromRGB(200,110,60)
+  t2.Size=UDim2.new(0,40,0,26)
+  t2.Position=UDim2.new(1,-44,.5,-13)
+  t2.BackgroundColor3=VERDE
   t2.Text="Puxa"
   t2.TextColor3=Color3.new(1,1,1)
   t2.TextSize=9
   t2.Font=Enum.Font.GothamBold
   t2.BorderSizePixel=0
   t2.Parent=r
-  local t2c=Instance.new("UICorner")t2c.CornerRadius=UDim.new(0,5)t2c.Parent=t2
+  local t2c=Instance.new("UICorner")t2c.CornerRadius=UDim.new(0,6)t2c.Parent=t2
   t1.MouseButton1Click:Connect(function()local h=hrp(p)if h then tp(h.CFrame*CFrame.new(0,0,3))end end)
   t2.MouseButton1Click:Connect(function()local a=hrp(p)local b=hrp()if a and b then a.CFrame=b.CFrame*CFrame.new(0,0,3)end end)
   task.spawn(function()
@@ -401,15 +391,16 @@ P.PlayerRemoving:Connect(function(p)if pbs[p]then pbs[p].r:Destroy()pbs[p]=nil e
 local sp={}
 for i=1,6 do
   local c=Instance.new("Frame")
-  c.Size=UDim2.new(1,0,0,50)
-  c.BackgroundColor3=Color3.fromRGB(25,25,38)
+  c.Size=UDim2.new(1,0,0,52)
+  c.BackgroundColor3=Color3.fromRGB(24,32,42)
   c.BorderSizePixel=0
   c.Parent=PP
   local cc2=Instance.new("UICorner")cc2.CornerRadius=UDim.new(0,8)cc2.Parent=c
+  local st=Instance.new("UIStroke")st.Color=AZUL st.Thickness=1 st.Transparency=.6 st.Parent=c
   local n=Instance.new("TextLabel")
-  n.Size=UDim2.new(0,28,0,28)
-  n.Position=UDim2.new(0,10,.5,-14)
-  n.BackgroundColor3=Color3.fromRGB(140,60,255)
+  n.Size=UDim2.new(0,30,0,30)
+  n.Position=UDim2.new(0,10,.5,-15)
+  n.BackgroundColor3=VERDE
   n.Text=tostring(i)
   n.TextColor3=Color3.new(1,1,1)
   n.TextSize=14
@@ -419,18 +410,18 @@ for i=1,6 do
   local nc=Instance.new("UICorner")nc.CornerRadius=UDim.new(1,0)nc.Parent=n
   local cl2=Instance.new("TextLabel")
   cl2.Size=UDim2.new(1,-160,0,20)
-  cl2.Position=UDim2.new(0,44,0,15)
+  cl2.Position=UDim2.new(0,46,0,16)
   cl2.BackgroundTransparency=1
   cl2.Text="(vazio)"
-  cl2.TextColor3=Color3.fromRGB(200,200,220)
+  cl2.TextColor3=Color3.fromRGB(200,220,240)
   cl2.TextSize=10
   cl2.Font=Enum.Font.Gotham
   cl2.TextXAlignment=Enum.TextXAlignment.Left
   cl2.Parent=c
   local sb2=Instance.new("TextButton")
-  sb2.Size=UDim2.new(0,30,0,30)
-  sb2.Position=UDim2.new(1,-38,.5,-15)
-  sb2.BackgroundColor3=Color3.fromRGB(60,160,90)
+  sb2.Size=UDim2.new(0,32,0,32)
+  sb2.Position=UDim2.new(1,-40,.5,-16)
+  sb2.BackgroundColor3=VERDE
   sb2.Text="💾"
   sb2.TextSize=12
   sb2.Font=Enum.Font.GothamBold
@@ -438,9 +429,9 @@ for i=1,6 do
   sb2.Parent=c
   local s2c=Instance.new("UICorner")s2c.CornerRadius=UDim.new(0,6)s2c.Parent=sb2
   local tb2=Instance.new("TextButton")
-  tb2.Size=UDim2.new(0,30,0,30)
-  tb2.Position=UDim2.new(1,-72,.5,-15)
-  tb2.BackgroundColor3=Color3.fromRGB(80,140,240)
+  tb2.Size=UDim2.new(0,32,0,32)
+  tb2.Position=UDim2.new(1,-76,.5,-16)
+  tb2.BackgroundColor3=AZUL
   tb2.Text="🎯"
   tb2.TextSize=12
   tb2.Font=Enum.Font.GothamBold
@@ -448,9 +439,9 @@ for i=1,6 do
   tb2.Parent=c
   local t2c2=Instance.new("UICorner")t2c2.CornerRadius=UDim.new(0,6)t2c2.Parent=tb2
   local db=Instance.new("TextButton")
-  db.Size=UDim2.new(0,30,0,30)
-  db.Position=UDim2.new(1,-106,.5,-15)
-  db.BackgroundColor3=Color3.fromRGB(180,60,80)
+  db.Size=UDim2.new(0,32,0,32)
+  db.Position=UDim2.new(1,-112,.5,-16)
+  db.BackgroundColor3=Color3.fromRGB(200,60,80)
   db.Text="✕"
   db.TextColor3=Color3.new(1,1,1)
   db.TextSize=12
@@ -466,56 +457,106 @@ end
 -- ===== ABA MOVIMENTO =====
 label(PM,"VELOCIDADE")
 local spdInp=input(PM,"WalkSpeed (ex: 100)")
-btn(PM,"⚡ Aplicar Speed",Color3.fromRGB(180,150,60),function()local h=hum()if h then h.WalkSpeed=tonumber(spdInp.Text)or 16 end end)
-btn(PM,"↩ Reset Speed (16)",Color3.fromRGB(80,80,110),function()local h=hum()if h then h.WalkSpeed=16 end end)
+btn(PM,"⚡ Aplicar Speed",VERDE,function()local h=hum()if h then h.WalkSpeed=tonumber(spdInp.Text)or 16 end end)
+btn(PM,"↩ Reset Speed (16)",Color3.fromRGB(60,70,90),function()local h=hum()if h then h.WalkSpeed=16 end end)
 
 label(PM,"PULO")
 local jmpInp=input(PM,"JumpPower (ex: 200)")
-btn(PM,"⬆ Aplicar Jump",Color3.fromRGB(180,150,60),function()local h=hum()if h then h.JumpPower=tonumber(jmpInp.Text)or 50 end end)
-btn(PM,"↩ Reset Jump (50)",Color3.fromRGB(80,80,110),function()local h=hum()if h then h.JumpPower=50 end end)
+btn(PM,"⬆ Aplicar Jump",VERDE,function()local h=hum()if h then h.JumpPower=tonumber(jmpInp.Text)or 50 end end)
+btn(PM,"↩ Reset Jump (50)",Color3.fromRGB(60,70,90),function()local h=hum()if h then h.JumpPower=50 end end)
 
-label(PM,"VOAR")
+label(PM,"VOAR - 4 MODOS")
 local flyOn=false
 local flyCon
 local flySpeed=80
-btn(PM,"🕊 Toggle Fly",Color3.fromRGB(70,130,220),function()
+local flyMode="velocity"
+
+local modeBtn=Instance.new("TextButton")
+modeBtn.Size=UDim2.new(1,0,0,30)
+modeBtn.BackgroundColor3=Color3.fromRGB(20,28,38)
+modeBtn.Text="Modo: VELOCITY (clica pra trocar)"
+modeBtn.TextColor3=VERDE
+modeBtn.TextSize=10
+modeBtn.Font=Enum.Font.GothamBold
+modeBtn.BorderSizePixel=0
+modeBtn.Parent=PM
+local mbc=Instance.new("UICorner")mbc.CornerRadius=UDim.new(0,8)mbc.Parent=modeBtn
+modeBtn.MouseButton1Click:Connect(function()
+  if flyMode=="velocity"then
+    flyMode="cframe"
+    modeBtn.Text="Modo: CFRAME"
+  elseif flyMode=="cframe"then
+    flyMode="bodyvelocity"
+    modeBtn.Text="Modo: BODYVELOCITY"
+  elseif flyMode=="bodyvelocity"then
+    flyMode="antigravity"
+    modeBtn.Text="Modo: ANTIGRAVITY"
+  else
+    flyMode="velocity"
+    modeBtn.Text="Modo: VELOCITY"
+  end
+end)
+
+btn(PM,"🕊 Toggle Fly",AZUL,function()
   flyOn=not flyOn
   if flyOn then
-    log("Fly ON")
+    log("Fly ON modo: "..flyMode)
+    local bv
+    if flyMode=="bodyvelocity"then
+      local h=hrp()
+      if h then
+        bv=Instance.new("BodyVelocity")
+        bv.MaxForce=Vector3.new(math.huge,math.huge,math.huge)
+        bv.Velocity=Vector3.new(0,0,0)
+        bv.Parent=h
+      end
+    end
     flyCon=R.Heartbeat:Connect(function()
       local h=hrp()
       local hh=hum()
       if not h or not hh then return end
-      hh.PlatformStand=true
-      local dir=Vector3.new(0,0,0)
       local cam=WS.CurrentCamera
+      local dir=Vector3.new(0,0,0)
       if UIS:IsKeyDown(Enum.KeyCode.W)then dir=dir+cam.CFrame.LookVector end
       if UIS:IsKeyDown(Enum.KeyCode.S)then dir=dir-cam.CFrame.LookVector end
       if UIS:IsKeyDown(Enum.KeyCode.A)then dir=dir-cam.CFrame.RightVector*-1 end
       if UIS:IsKeyDown(Enum.KeyCode.D)then dir=dir+cam.CFrame.RightVector end
       if UIS:IsKeyDown(Enum.KeyCode.Space)then dir=dir+Vector3.new(0,1,0)end
       if UIS:IsKeyDown(Enum.KeyCode.LeftControl)then dir=dir-Vector3.new(0,1,0)end
-      h.Velocity=dir*flySpeed
+      if flyMode=="velocity"then
+        hh.PlatformStand=true
+        h.Velocity=dir*flySpeed
+      elseif flyMode=="cframe"then
+        h.CFrame=h.CFrame+dir*(flySpeed/60)
+      elseif flyMode=="bodyvelocity"then
+        if bv then bv.Velocity=dir*flySpeed end
+      elseif flyMode=="antigravity"then
+        hh.PlatformStand=true
+        h.Velocity=dir*flySpeed+Vector3.new(0,0.5,0)
+      end
     end)
   else
     log("Fly OFF")
     if flyCon then flyCon:Disconnect()end
     local hh=hum()if hh then hh.PlatformStand=false end
+    local h=hrp()
+    if h then
+      for _,v in ipairs(h:GetChildren())do
+        if v:IsA("BodyVelocity")then v:Destroy()end
+      end
+    end
   end
 end)
 
 local flySpdInp=input(PM,"Fly speed (padrão 80)")
-btn(PM,"⚙ Aplicar Fly Speed",Color3.fromRGB(70,130,220),function()
-  flySpeed=tonumber(flySpdInp.Text)or 80
-end)
+btn(PM,"⚙ Aplicar Fly Speed",AZUL,function()flySpeed=tonumber(flySpdInp.Text)or 80 end)
 
 label(PM,"NOCLIP")
 local ncOn=false
 local ncCon
-btn(PM,"👻 Toggle Noclip",Color3.fromRGB(120,100,180),function()
+btn(PM,"👻 Toggle Noclip",VERDE,function()
   ncOn=not ncOn
   if ncOn then
-    log("Noclip ON")
     ncCon=R.Stepped:Connect(function()
       local c=L.Character
       if not c then return end
@@ -524,7 +565,6 @@ btn(PM,"👻 Toggle Noclip",Color3.fromRGB(120,100,180),function()
       end
     end)
   else
-    log("Noclip OFF")
     if ncCon then ncCon:Disconnect()end
   end
 end)
@@ -532,7 +572,7 @@ end)
 label(PM,"PULO INFINITO")
 local ijOn=false
 local ijCon
-btn(PM,"🦘 Toggle Infinite Jump",Color3.fromRGB(120,100,180),function()
+btn(PM,"🦘 Toggle Infinite Jump",AZUL,function()
   ijOn=not ijOn
   if ijOn then
     ijCon=UIS.JumpRequest:Connect(function()
@@ -545,154 +585,5 @@ btn(PM,"🦘 Toggle Infinite Jump",Color3.fromRGB(120,100,180),function()
 end)
 
 label(PM,"GRAVIDADE")
-btn(PM,"🌍 Gravity 0",Color3.fromRGB(80,120,180),function()WS.Gravity=0 end)
-btn(PM,"🌍 Gravity 196 (normal)",Color3.fromRGB(80,80,110),function()WS.Gravity=196 end)
-
-label(PM,"HipHeight")
-local hhInp=input(PM,"HipHeight (padrão 2)")
-btn(PM,"⚙ Aplicar HipHeight",Color3.fromRGB(80,120,180),function()local h=hum()if h then h.HipHeight=tonumber(hhInp.Text)or 2 end end)-- ===== ABA COMBATE =====
-label(PC,"DEFESA")
-local gmOn=false
-local gmCon
-btn(PC,"🛡 Toggle Godmode",Color3.fromRGB(60,160,90),function()
-  gmOn=not gmOn
-  if gmOn then
-    gmCon=R.Heartbeat:Connect(function()
-      local h=hum()
-      if h then h.MaxHealth=math.huge h.Health=math.huge end
-    end)
-  else
-    if gmCon then gmCon:Disconnect()end
-    local h=hum()if h then h.MaxHealth=100 h.Health=100 end
-  end
-end)
-
-label(PC,"ATAQUE")
-btn(PC,"💀 Kill All",Color3.fromRGB(200,60,60),function()
-  for _,p in ipairs(P:GetPlayers())do
-    if p~=L then
-      local h=hum(p)
-      if h then h.Health=0 end
-    end
-  end
-end)
-
-btn(PC,"🌀 Fling Players",Color3.fromRGB(200,100,60),function()
-  for _,p in ipairs(P:GetPlayers())do
-    if p~=L then
-      local h=hrp(p)
-      if h then h.Velocity=Vector3.new(math.random(-500,500),math.random(200,500),math.random(-500,500))end
-    end
-  end
-end)
-
-label(PC,"ARMA")
-local rapidOn=false
-local rapidCon
-btn(PC,"🔫 Toggle Rapid Fire",Color3.fromRGB(180,80,80),function()
-  rapidOn=not rapidOn
-  if rapidOn then
-    rapidCon=R.Heartbeat:Connect(function()
-      local c=L.Character if not c then return end
-      for _,t in ipairs(c:GetChildren())do
-        if t:IsA("Tool")then t:Activate()end
-      end
-    end)
-  else
-    if rapidCon then rapidCon:Disconnect()end
-  end
-end)
-
--- ===== ABA VISUAL =====
-label(PV,"INVISIBILIDADE")
-
-local invOn=false
-local invMode="local"
-local invCon
-
--- Dropdown de modo
-local modeFrame=Instance.new("Frame")
-modeFrame.Size=UDim2.new(1,0,0,28)
-modeFrame.BackgroundColor3=Color3.fromRGB(20,20,32)
-modeFrame.BorderSizePixel=0
-modeFrame.Parent=PV
-local mfc=Instance.new("UICorner")mfc.CornerRadius=UDim.new(0,6)mfc.Parent=modeFrame
-local modeBtn=Instance.new("TextButton")
-modeBtn.Size=UDim2.new(1,0,1,0)
-modeBtn.BackgroundTransparency=1
-modeBtn.Text="Modo: LOCAL (só você não vê)"
-modeBtn.TextColor3=Color3.fromRGB(220,220,240)
-modeBtn.TextSize=11
-modeBtn.Font=Enum.Font.Gotham
-modeBtn.Parent=modeFrame
-modeBtn.MouseButton1Click:Connect(function()
-  if invMode=="local"then
-    invMode="global"
-    modeBtn.Text="Modo: GLOBAL (todos não veem)"
-  else
-    invMode="local"
-    modeBtn.Text="Modo: LOCAL (só você não vê)"
-  end
-end)
-
-btn(PV,"👻 Toggle Invisibilidade",Color3.fromRGB(120,100,180),function()
-  invOn=not invOn
-  if invOn then
-    log("Invisibilidade ON ("..invMode..")")
-    if invCon then invCon:Disconnect()end
-    if invMode=="local"then
-      local c=L.Character
-      if not c then return end
-      for _,v in ipairs(c:GetDescendants())do
-        if v:IsA("BasePart")or v:IsA("Decal")then
-          v.LocalTransparencyModifier=1
-        end
-      end
-    else
-      invCon=R.Heartbeat:Connect(function()
-        local c=L.Character
-        if not c then return end
-        for _,v in ipairs(c:GetDescendants())do
-          if v:IsA("BasePart")then v.Transparency=1
-          elseif v:IsA("Decal")then v.Transparency=1
-          end
-        end
-      end)
-    end
-  else
-    if invCon then invCon:Disconnect()end
-    local c=L.Character
-    if c then
-      for _,v in ipairs(c:GetDescendants())do
-        if v:IsA("BasePart")then
-          v.Transparency=0
-          v.LocalTransparencyModifier=0
-        elseif v:IsA("Decal")then
-          v.Transparency=0
-        end
-      end
-    end
-  end
-end)
-
-label(PV,"TRANSPARÊNCIA")
-local transInp=input(PV,"Transparência (0 a 1)")
-btn(PV,"🎨 Aplicar Transparência",Color3.fromRGB(120,100,180),function()
-  local v=tonumber(transInp.Text)or 0.5
-  local c=L.Character
-  if not c then return end
-  for _,p in ipairs(c:GetDescendants())do
-    if p:IsA("BasePart")then p.Transparency=v end
-  end
-end)
-
-label(PV,"ACESSÓRIOS")
-btn(PV,"🎩 Remover Acessórios",Color3.fromRGB(120,100,180),function()
-  local c=L.Character
-  if not c then return end
-  for _,v in ipairs(c:GetDescendants())do
-    if v:IsA("Accessory")or v:IsA("Hat")then v:Destroy() end
-  end
-end)
-
-log("=== EGZODZ HUB v1.0 carregado ===")
+btn(PM,"🌍 Gravity 0",VERDE,function()WS.Gravity=0 end)
+btn(PM,"🌍 Gravity 196 (normal)",Color3.fromRGB(60,70,90),function()WS.Gravity=196 end)
